@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "PeterJausovec.vscode-docker",
+        "eamodio.gitlens",
+        "rebornix.ruby",
+        "misogi.ruby-rubocop",
+        "robertohuertasm.vscode-icons",
+        "deerawan.vscode-dash",
+        "ms-vsliveshare.vsliveshare"
+    ]
+}

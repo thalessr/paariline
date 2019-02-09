@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "rspec",
+            "type": "shell",
+            "command": "bundle exec rspec",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "rubocop",
+            "type": "shell",
+            "command": "bundle exec rubocop --auto-correct ${relativeFile}",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never"
+            }
+        },
+        {
+            "label": "config",
+            "type": "shell",
+            "command": "gem install fastri ruby-debug-ide debase rcodetools --no-ri --no-rdoc",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}

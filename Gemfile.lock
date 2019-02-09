@@ -92,6 +92,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
     docile (1.3.1)
+    dotenv (0.7.0)
     equalizer (0.0.11)
     erubi (1.8.0)
     erubis (2.7.0)
@@ -107,6 +108,9 @@ GEM
       colorize (~> 0.7)
       ruby_parser (>= 3.12.0)
     ffi (1.10.0)
+    foreman (0.64.0)
+      dotenv (~> 0.7.0)
+      thor (>= 0.13.6)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.5.3)
@@ -155,6 +159,8 @@ GEM
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.6)
+    rack-proxy (0.6.5)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.2)
@@ -290,6 +296,10 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
+    webpacker (3.5.5)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -309,6 +319,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   fasterer
+  foreman
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   overcommit
@@ -331,6 +342,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
+  webpacker
 
 RUBY VERSION
    ruby 2.6.0p0
