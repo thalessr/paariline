@@ -31,7 +31,6 @@ module Paariline
     # the framework and any gems in your application.
     config.generators do |generator|
       generator.helper false
-      generator.orm :active_record, primary_key_type: :uuid
       generator.assets false
       generator.views_specs false
       generator.test_framework :rspec

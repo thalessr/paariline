@@ -32,6 +32,9 @@
 
 .DS_Store
 
+# Simplecov
+coverage/
+
 /spec/examples.txt
 .vscode/
 /public/packs
