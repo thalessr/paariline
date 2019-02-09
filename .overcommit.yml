@@ -1,0 +1,31 @@
+verify_signatures: true
+
+PreCommit:
+
+  BrokenSymlinks:
+    enabled: true
+
+  Fasterer:
+    enabled: true
+    command: ['bundle', 'exec', 'fasterer']
+
+  MergeConflicts:
+    enabled: true
+
+  RailsBestPractices:
+    enabled: true
+
+  RailsSchemaUpToDate:
+    enabled: true
+
+  Reek:
+    enabled: true
+    flags: ['--single-line', '--no-color', '--force-exclusion']
+
+  RuboCop:
+    enabled: true
+    on_warn: fail
+    command: ['bundle', 'exec', 'rubocop']
+
+  TrailingWhitespace:
+    enabled: true

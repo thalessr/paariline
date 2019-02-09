@@ -1,0 +1,54 @@
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'config/**/*'
+    - 'script/**/*'
+  TargetRubyVersion: 2.4
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/**/*'
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - 'db/**/*'
+
+Style/BlockDelimiters:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Style/BracesAroundHashParameters:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Layout/SpaceAroundBlockParameters:
+  EnforcedStyleInsidePipes: no_space
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+      default: []
+      '%i': '[]'
+      '%I': '[]'
+      '%r': '{}'
+      '%w': '[]'
+      '%W': '[]'

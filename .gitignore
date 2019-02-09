@@ -31,3 +31,6 @@
 /config/master.key
 
 .DS_Store
+
+/spec/examples.txt
+.vscode/
