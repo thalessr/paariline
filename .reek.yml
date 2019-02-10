@@ -22,3 +22,6 @@ directories:
   "app/mailers":
     InstanceVariableAssumption:
       enabled: false
+  "app/services":
+    Attribute:
+      enabled: false

@@ -7,4 +7,16 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-console.log('Hello World from Webpacker')
+import Vue from 'vue'
+import { Menu, Icon } from 'ant-design-vue';
+import Welcome from '../welcome.vue'
+
+document.addEventListener('DOMContentLoaded', () => {
+    Vue.use(Menu);
+    Vue.use(Icon);
+    Vue.config.productionTip = false;
+    const app = new Vue({
+        el: '#welcome',
+        render: h => h(Welcome)
+    })
+})

@@ -4,7 +4,7 @@ module RandomUser
   class Client
 
     attr_accessor :quantity, :gender
-    attrr_reader :connection
+    attr_reader :connection
 
     def initialize
       @connection = RandomUser::Connection.new
