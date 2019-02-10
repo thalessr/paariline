@@ -41,6 +41,9 @@ gem 'webpacker'
 # Authentication
 gem 'devise'
 
+# HTTP client
+gem 'faraday', '~> 0.15'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -77,6 +80,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', require: false
+  gem 'vcr', '~> 4.0'
+  gem 'webmock', '~> 3.4'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

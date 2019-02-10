@@ -7,4 +7,25 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :lockable,
          :rememberable, :validatable
 
+  has_many :profile_pictures, dependent: :destroy, inverse_of: :user
+
+  def full_name
+    [first_name, last_name].select(&:present?).join(' ')
+  end
+
+  def new_pictures=(files)
+    Array.wrap(files).each do |file|
+      image = download_picture(file)
+      filename = "#{Time.zone.now.strftime('%Y%m%d_%H%M%S')}_#{File.basename(file)}"
+      profile_pictures.build.picture.attach(io: image, filename: filename, content_type: 'image/jpg')
+    end
+  end
+
+  private
+
+  def download_picture(file_url)
+    response = Net::HTTP.get_response(URI.parse(file_url))
+    StringIO.new(response.body)
+  end
+
 end

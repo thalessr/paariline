@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://randomuser.me/api/?exc=registered,phone,cell&password=upper,8-128&results=2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 10 Feb 2019 15:52:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=de4d062457c5e4616e54191dd5331ef611549813943; expires=Mon, 10-Feb-20
+        15:52:23 GMT; path=/; domain=.randomuser.me; HttpOnly
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache
+      Etag:
+      - W/"80d-xvBL7wNlDHb7cjQnueE3+A"
+      Vary:
+      - Accept-Encoding
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 4a6fbe183fcc5b99-HEL
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXN1bHRzIjpbeyJnZW5kZXIiOiJmZW1hbGUiLCJuYW1lIjp7InRpdGxlIjoibWlzcyIsImZpcnN0IjoidGhlcmVzaWEiLCJsYXN0IjoibcO2Y2tlbCJ9LCJsb2NhdGlvbiI6eyJzdHJlZXQiOiJrYXBlbGxlbndlZyAxMiIsImNpdHkiOiJiw7xkZWxzZG9yZiIsInN0YXRlIjoibm9yZHJoZWluLXdlc3RmYWxlbiIsInBvc3Rjb2RlIjo3ODQ1MiwiY29vcmRpbmF0ZXMiOnsibGF0aXR1ZGUiOiItMzkuNjg2MyIsImxvbmdpdHVkZSI6IjczLjUwOTkifSwidGltZXpvbmUiOnsib2Zmc2V0IjoiKzU6MDAiLCJkZXNjcmlwdGlvbiI6IkVrYXRlcmluYnVyZywgSXNsYW1hYmFkLCBLYXJhY2hpLCBUYXNoa2VudCJ9fSwiZW1haWwiOiJ0aGVyZXNpYS5tw7Zja2VsQGV4YW1wbGUuY29tIiwibG9naW4iOnsidXVpZCI6ImU5MmE1NzI5LWMwNmMtNGZlYy1iZDY2LWQxNWEwMmM2MTI5NyIsInVzZXJuYW1lIjoib3JhbmdlbWVlcmNhdDc4NyIsInBhc3N3b3JkIjoiSlZESlFCRFVMQ0VRTEZQTVVPSEtCUUtSQ0NaTVVPUiIsInNhbHQiOiJhQVc3N1ZEMiIsIm1kNSI6Ijc0ZmM5YjMzODI2ZTQ0OWUxNDBlNmM2NjFkNTBmYTAyIiwic2hhMSI6IjdlY2NiYWRkMzFiNTYwYmE4YTk0NmQ4ZGMxMzgxNjg5MzQ4MzJhNDEiLCJzaGEyNTYiOiIyODA1M2E1MmQ4YWFlNjQxYzMyMTJiODhmYTE0YmZiMmRkYTRkYmI2M2RjNGYyN2IzMmZlMDFkNTU0YTJmNWM1In0sImRvYiI6eyJkYXRlIjoiMTk4NS0xMi0yN1QwMzowNTo1OFoiLCJhZ2UiOjMzfSwiaWQiOnsibmFtZSI6IiIsInZhbHVlIjpudWxsfSwicGljdHVyZSI6eyJsYXJnZSI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL3dvbWVuLzU5LmpwZyIsIm1lZGl1bSI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL21lZC93b21lbi81OS5qcGciLCJ0aHVtYm5haWwiOiJodHRwczovL3JhbmRvbXVzZXIubWUvYXBpL3BvcnRyYWl0cy90aHVtYi93b21lbi81OS5qcGcifSwibmF0IjoiREUifSx7ImdlbmRlciI6ImZlbWFsZSIsIm5hbWUiOnsidGl0bGUiOiJtcyIsImZpcnN0IjoicGViYmxlcyIsImxhc3QiOiJtZWVzdGVyIn0sImxvY2F0aW9uIjp7InN0cmVldCI6IjQ4MjIgZHJpZnQiLCJjaXR5IjoidmxhYXJkaW5nZW4iLCJzdGF0ZSI6ImZyaWVzbGFuZCIsInBvc3Rjb2RlIjo2MjA4MiwiY29vcmRpbmF0ZXMiOnsibGF0aXR1ZGUiOiItNTMuNzU1OSIsImxvbmdpdHVkZSI6IjI5LjkyNTQifSwidGltZXpvbmUiOnsib2Zmc2V0IjoiKzExOjAwIiwiZGVzY3JpcHRpb24iOiJNYWdhZGFuLCBTb2xvbW9uIElzbGFuZHMsIE5ldyBDYWxlZG9uaWEifX0sImVtYWlsIjoicGViYmxlcy5tZWVzdGVyQGV4YW1wbGUuY29tIiwibG9naW4iOnsidXVpZCI6IjdjODQ2MWE2LWIxMWYtNDdjOC1hODljLWNiOWQ5OWVhNDBkYiIsInVzZXJuYW1lIjoiYmVhdXRpZnVsdGlnZXIzNTYiLCJwYXNzd29yZCI6IkFCUUNDSEVLRkpXQk1TSklFUEFEUFZTV1dBTk1VUExJVkJGSlFLSEhZU0RWQUtJTkhSTSIsInNhbHQiOiJGYkVtTUROTSIsIm1kNSI6ImE5YjgzY2I0MWFjNjY5YjMzYmZlZjkxZDNhMmUxYTY3Iiwic2hhMSI6IjY0MjhhMDU4ZmI1OGViN2Q0ZDg3ZGY0ZWFjNDg1M2E4NzMzZGJhOWUiLCJzaGEyNTYiOiJiZDc2OTIwNDk2NzRmYjEyNDgzYTAzZTQyMjYxMGZlZDQyYjVhMzNhN2FkMzVmZmIzNTQ1OTE4MTJjOWFkYWE2In0sImRvYiI6eyJkYXRlIjoiMTk3My0wNS0xOFQxNzoyODo0MloiLCJhZ2UiOjQ1fSwiaWQiOnsibmFtZSI6IkJTTiIsInZhbHVlIjoiOTY3MTUwOTAifSwicGljdHVyZSI6eyJsYXJnZSI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL3dvbWVuLzg0LmpwZyIsIm1lZGl1bSI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL21lZC93b21lbi84NC5qcGciLCJ0aHVtYm5haWwiOiJodHRwczovL3JhbmRvbXVzZXIubWUvYXBpL3BvcnRyYWl0cy90aHVtYi93b21lbi84NC5qcGcifSwibmF0IjoiTkwifV0sImluZm8iOnsic2VlZCI6ImM3NjMyYjgxMDU2MjJhNjAiLCJyZXN1bHRzIjoyLCJwYWdlIjoxLCJ2ZXJzaW9uIjoiMS4yIn19
+    http_version:
+  recorded_at: Sun, 10 Feb 2019 15:52:26 GMT
+recorded_with: VCR 4.0.0

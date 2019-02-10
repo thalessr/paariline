@@ -13,4 +13,22 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:password) }
   end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:profile_pictures) }
+  end
+
+  describe '#full_name' do
+    context 'when both first_name and last_name are provided' do
+      let(:user) { build(:user, first_name: 'Mario', last_name: 'Bros') }
+
+      it { expect(user.full_name).to eq('Mario Bros') }
+    end
+
+    context 'when only first_name is provided' do
+      let(:user) { build(:user, first_name: 'Mario', last_name: nil) }
+
+      it { expect(user.full_name).to eq('Mario') }
+    end
+  end
 end
