@@ -13,7 +13,8 @@
 export default {
   data() {
     return {
-      current: ["home"]
+      current: ["home"],
+      name: 'Welcome'
     };
   }
 };
