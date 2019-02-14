@@ -13,4 +13,5 @@ Rails.application.routes.draw do
 
   resources :dashboard, only: :index
   resources :welcome_page, only: :index
+  resources :users, only: %i[show update]
 end

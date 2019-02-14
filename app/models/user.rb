@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :profile_pictures, dependent: :destroy, inverse_of: :user
 
+  validates :first_name, :last_name, presence: true, on: :update
+
   def full_name
     [first_name, last_name].select(&:present?).join(' ')
   end

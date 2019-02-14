@@ -12,6 +12,8 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:password) }
+    it { is_expected.to validate_presence_of(:first_name).on(:update) }
+    it { is_expected.to validate_presence_of(:last_name).on(:update) }
   end
 
   describe 'associations' do
