@@ -1,32 +1,41 @@
 <template>
-  <div>
-    <a-card
-      hoverable
-      style="width: 300px"
-      v-for="(item, index) in profilePictures"
-      v-bind:item="item"
-      v-bind:index="index"
-      v-bind:key="item.id"
-    >
-      <img alt="example" v-bind:src="item.attributes.picture_url" slot="cover">
-      <template class="ant-card-actions" slot="actions">
-        <a-icon type="like" v-on:click="likePicture(item.id)"/>
-        <a-icon type="dislike"/>
-      </template>
-      {{item.attributes.user_full_name | capitalize}}
-      {{item.attributes.user_age}}
-    </a-card>
+  <div style="background-color: #ececec; padding: 20px;">
+    <a-row :gutter="16">
+      <a-col
+        style="margin-bottom: 20px"
+        :span="8"
+        v-for="(item, index) in profilePictures"
+        v-bind:item="item"
+        v-bind:index="index"
+        v-bind:key="item.id"
+      >
+        <a-card hoverable style="width: 300px">
+          <img alt="example" :src="item.attributes.picture_url" slot="cover">
+          <template class="ant-card-actions" slot="actions">
+            <a-icon type="like" v-on:click="likePicture(item.id)"/>
+            <a-icon type="dislike"/>
+          </template>
+          {{item.attributes.user_full_name | capitalize}}
+          {{item.attributes.user_age}}
+        </a-card>
+      </a-col>
+      <a-divider/>
+    </a-row>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import { Card, Icon, Avatar } from "ant-design-vue";
+import { Card, Icon, Avatar, Row, Col, Divider } from "ant-design-vue";
 import VueResource from "vue-resource";
 
 Vue.use(Card);
 Vue.use(Icon);
 Vue.use(Avatar);
+Vue.use(Row);
+Vue.use(Divider);
+Vue.use(Col);
+
 Vue.use(VueResource);
 
 Vue.http.headers.common["X-CSRF-Token"] = document
@@ -39,20 +48,21 @@ let customActions = {
 };
 var resource = Vue.resource("profile_pictures{/id}", {}, customActions);
 export default {
+  name: "Profiles",
+  filters: {
+    capitalize: function(value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+  },
   data() {
     return {
       profilePictures: {},
       visible: false,
       type: "success",
       message: "",
-      description: "",
-      filters: {
-        capitalize: function(value) {
-          if (!value) return "";
-          value = value.toString();
-          return value.charAt(0).toUpperCase() + value.slice(1);
-        }
-      }
+      description: ""
     };
   },
 
@@ -63,7 +73,6 @@ export default {
     fetchProfiles() {
       resource.get().then(
         response => {
-          console.log(response.body.data);
           this.profilePictures = response.body.data;
         },
         response => {
@@ -91,3 +100,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+.box {
+  border: 2px solid;
+  border-radius: 25px;
+  color: purple;
+  width: 120px;
+}
+</style>

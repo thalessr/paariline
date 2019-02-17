@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   resources :users, only: %i[show update]
   resources :profile_pictures, only: %i[index] do
     post :like, on: :member
+    post :dislike, on: :member
   end
 end
