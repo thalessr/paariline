@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Users from '../users.vue'
 import Welcome from '../welcome.vue'
+import Profiles from '../profiles.vue'
 import { Menu, Icon } from 'ant-design-vue';
 
 Vue.use(Router)
@@ -11,19 +12,19 @@ Vue.use(Icon);
 export default new Router({
     routes: [
         {
-            path: '/',
-            name: 'Hello',
+            path: '/users',
+            name: 'Users',
             component: Users
         },
         {
-            path: '/about',
-            name: 'About',
+            path: '/',
+            name: 'Home',
             component: Welcome
         },
         {
-            path: '/coins/:id',
-            name: 'Coins',
-            component: Users
+            path: '/profiles',
+            name: 'Profiles',
+            component: Profiles
         }
     ]
 })

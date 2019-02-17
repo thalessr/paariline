@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_10_134113) do
+ActiveRecord::Schema.define(version: 2019_02_17_003051) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,28 @@ ActiveRecord::Schema.define(version: 2019_02_10_134113) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "picture_interactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "profile_picture_id"
+    t.string "interaction_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interaction_type"], name: "index_picture_interactions_on_interaction_type"
+    t.index ["profile_picture_id"], name: "index_picture_interactions_on_profile_picture_id"
+    t.index ["user_id"], name: "index_picture_interactions_on_user_id"
+  end
+
+  create_table "pictures_interactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "profile_picture_id"
+    t.string "interaction_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interaction_type"], name: "index_pictures_interactions_on_interaction_type"
+    t.index ["profile_picture_id"], name: "index_pictures_interactions_on_profile_picture_id"
+    t.index ["user_id"], name: "index_pictures_interactions_on_user_id"
   end
 
   create_table "profile_pictures", force: :cascade do |t|

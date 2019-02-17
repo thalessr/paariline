@@ -92,8 +92,8 @@ export default {
     fecthCurrentUser() {
       this.$http.get("users/1").then(
         response => {
-          this.user = response.body;
-          this.user.birth_date = this.$moment(response.body.birth_date);
+          this.user = response.body.data.attributes;
+          this.user.birth_date = this.$moment(this.user.birth_date);
         },
         response => {
           console.error(response);
@@ -105,8 +105,8 @@ export default {
       resource.update({ id: this.user.id }, { user: this.user }).then(
         response => {
           this.displayMessage("success", "Success", "User saved sucessfully");
-          this.user = response.body;
-          this.user.birth_date = this.$moment(response.body.birth_date);
+          this.user = response.body.data.attributes;
+          this.user.birth_date = this.$moment(this.user.birth_date);
         },
         response => {
           let errorMessage = "";

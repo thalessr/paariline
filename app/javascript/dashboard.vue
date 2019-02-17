@@ -3,10 +3,13 @@
     <a-layout-header theme="light" class="header">
       <a-menu v-model="current" mode="horizontal" theme="dark" :style="{ lineHeight: '64px' }">
         <a-menu-item key="home">
-          <router-link :to="{ name: 'Hello' }">Home</router-link>
+          <router-link to="/">Home</router-link>
         </a-menu-item>
-        <a-menu-item key="About">
-          <router-link to="/about">About</router-link>
+        <a-menu-item key="Profile">
+          <router-link to="/users">My profile</router-link>
+        </a-menu-item>
+        <a-menu-item key="Profiles">
+          <router-link to="/profiles">Profiles</router-link>
         </a-menu-item>
         <a-menu-item key="logout">
           <a href="/users/sign_out" rel="noopener noreferrer" data-method="delete">

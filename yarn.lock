@@ -7333,6 +7333,11 @@ vue-style-loader@^4.0.1:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
+vue-swing@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/vue-swing/-/vue-swing-0.0.10.tgz#b2fb64b915f65494fa0a301f8a2c12455c6a5a5e"
+  integrity sha512-n1uOQ47Et6C2nAdamfkRVCx6Afs5aq2dMFmhQf0GyWElfk9SmkeYhp2yCqkFiaqdvKYD8QNmTuQGYF+4zs7Gjg==
+
 vue-template-compiler@^2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.4.tgz#0feacfe35e3386033bf4fe31ab4ff1dc1a0c5dec"
