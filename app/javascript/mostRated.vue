@@ -11,15 +11,17 @@
       >
         <a-card hoverable style="width: 300px">
           <img alt="example" :src="item.attributes.picture_url" slot="cover">
-          <template class="ant-card-actions" slot="actions">
-            <a-icon type="like" v-on:click="likePicture(item)"/>
-            <a-icon type="dislike" v-on:click="dislikePicture(item)"/>
-          </template>
           <a-card-meta>
             <template
               slot="title"
             >{{item.attributes.user_full_name | capitalize}}, {{item.attributes.user_age}}</template>
-            <template slot="description">City: {{item.attributes.user_city | capitalize}}</template>
+            <template slot="description">
+                Number of likes
+              <a-badge
+                :count="item.attributes.like_count"
+                :numberStyle="{backgroundColor: '#52c41a'}"
+              />
+            </template>
           </a-card-meta>
         </a-card>
       </a-col>
@@ -30,15 +32,15 @@
 
 <script>
 import Vue from "vue";
-import { Card, Icon, Avatar, Row, Col, Divider } from "ant-design-vue";
+import { Card, Icon, Row, Col, Divider, Badge } from "ant-design-vue";
 import VueResource from "vue-resource";
 
 Vue.use(Card);
 Vue.use(Icon);
-Vue.use(Avatar);
 Vue.use(Row);
 Vue.use(Divider);
 Vue.use(Col);
+Vue.use(Badge);
 
 Vue.use(VueResource);
 
@@ -47,8 +49,7 @@ Vue.http.headers.common["X-CSRF-Token"] = document
   .getAttribute("content");
 
 let customActions = {
-  like: { method: "POST", url: "profile_pictures{/id}/like" },
-  dislike: { method: "POST", url: "profile_pictures{/id}/dislike" }
+  mostRated: { method: "GET", url: "/profile_pictures/most_rated" }
 };
 var resource = Vue.resource("profile_pictures{/id}", {}, customActions);
 export default {
@@ -62,11 +63,7 @@ export default {
   },
   data() {
     return {
-      profilePictures: {},
-      visible: false,
-      type: "success",
-      message: "",
-      description: ""
+      profilePictures: {}
     };
   },
 
@@ -75,7 +72,7 @@ export default {
   },
   methods: {
     fetchProfiles() {
-      resource.get().then(
+      resource.mostRated().then(
         response => {
           this.profilePictures = response.body.data;
         },
@@ -83,31 +80,6 @@ export default {
           console.error(response);
         }
       );
-    },
-    likePicture(picture) {
-      resource.like({ id: picture.id }, {}).then(
-        response => {
-          console.log(response.body.data);
-          this.removePicture(picture);
-        },
-        response => {
-          // error callback
-        }
-      );
-    },
-    dislikePicture(picture) {
-      resource.dislike({ id: picture.id }, {}).then(
-        response => {
-          console.log(response.body.data);
-          this.removePicture(picture);
-        },
-        response => {
-          // error callback
-        }
-      );
-    },
-    removePicture(picture) {
-      this.profilePictures.splice(this.profilePictures.indexOf(picture), 1);
     }
   }
 };

@@ -4,7 +4,7 @@ class ProfilePicturesController < ApplicationController
 
   def index
     render json: ProfilePicturesSerializer.new(
-      ProfilePicture.includes(:user).with_attached_picture.take(3)
+      ProfilePicture.includes(:user).with_attached_picture.take(8)
     ).serialized_json
   end
 
@@ -12,7 +12,7 @@ class ProfilePicturesController < ApplicationController
     @profile_picture = ProfilePicture.find(params[:id])
     @profile_picture.add_like(current_user)
     if @profile_picture.save
-      render json: ProfilePicturesSerializer.new(@profile_picture).serialized_json, status: :created
+      render json: @profile_picture, status: :created
     else
       render json: { errors: @profile_picture.errors.full_messages }, status: :unprocessable_entity
     end
@@ -22,10 +22,16 @@ class ProfilePicturesController < ApplicationController
     @profile_picture = ProfilePicture.find(params[:id])
     @profile_picture.add_dislike(current_user)
     if @profile_picture.save
-      render json: ProfilePicturesSerializer.new(@profile_picture).serialized_json, status: :created
+      render json: @profile_picture, status: :created
     else
       render json: { errors: @profile_picture.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def most_rated
+    render json: ProfilePicturesSerializer.new(
+      ProfilePicture.includes(:user).with_attached_picture.most_rated(current_user)
+    ).serialized_json
   end
 
 end

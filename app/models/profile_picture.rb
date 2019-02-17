@@ -22,6 +22,8 @@ class ProfilePicture < ApplicationRecord
            foreign_key: :profile_picture_id,
            inverse_of: :profile_picture
 
+  scope :most_rated, ->(id) { where.not(user_id: id).order(like_count: :desc).take(6) }
+
   delegate :full_name, :city, :age, to: :user, prefix: true
 
   def add_like(current_user)

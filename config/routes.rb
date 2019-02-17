@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   resources :profile_pictures, only: %i[index] do
     post :like, on: :member
     post :dislike, on: :member
+    get :most_rated, on: :collection
   end
 end
