@@ -11,6 +11,8 @@ class PictureInteraction < ApplicationRecord
   belongs_to :user
   belongs_to :profile_picture
 
+  scope :recently_viewed, -> { where('created_at >= ?', 6.hours.ago) }
+
   validates :interaction_type, inclusion: { in: InteractionTypes::ALL }, presence: true
 
   after_commit :update_like_counter, if: proc { |record| record.interaction_type == InteractionTypes::LIKE }

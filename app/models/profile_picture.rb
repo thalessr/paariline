@@ -22,7 +22,13 @@ class ProfilePicture < ApplicationRecord
            foreign_key: :profile_picture_id,
            inverse_of: :profile_picture
 
-  scope :most_rated, ->(id) { where.not(user_id: id).order(like_count: :desc).take(6) }
+  scope :most_rated, ->(user_id) { where.not(user_id: user_id).order(like_count: :desc).take(20) }
+  scope :avaiable_to_display, lambda { |user_id|
+    left_joins(:picture_interactions).where.not(
+      id: PictureInteraction.recently_viewed.pluck(:profile_picture_id),
+      user_id: user_id
+    )
+  }
 
   delegate :full_name, :city, :age, to: :user, prefix: true
 

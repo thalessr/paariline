@@ -44,17 +44,6 @@ ActiveRecord::Schema.define(version: 2019_02_17_003051) do
     t.index ["user_id"], name: "index_picture_interactions_on_user_id"
   end
 
-  create_table "pictures_interactions", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "profile_picture_id"
-    t.string "interaction_type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["interaction_type"], name: "index_pictures_interactions_on_interaction_type"
-    t.index ["profile_picture_id"], name: "index_pictures_interactions_on_profile_picture_id"
-    t.index ["user_id"], name: "index_pictures_interactions_on_user_id"
-  end
-
   create_table "profile_pictures", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "dislike_count", default: 0
