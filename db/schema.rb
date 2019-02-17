@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_17_175109) do
+ActiveRecord::Schema.define(version: 2019_02_17_183118) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 2019_02_17_175109) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.integer "chat_room_id"
+    t.integer "sent_by_id"
+    t.integer "seen_by_id"
+    t.text "content"
+    t.datetime "seent_at"
+    t.datetime "sent_at"
+    t.index ["chat_room_id"], name: "index_chat_messages_on_chat_room_id"
+    t.index ["seen_by_id"], name: "index_chat_messages_on_seen_by_id"
+    t.index ["sent_by_id"], name: "index_chat_messages_on_sent_by_id"
   end
 
   create_table "chat_rooms", force: :cascade do |t|

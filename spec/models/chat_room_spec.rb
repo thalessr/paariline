@@ -18,5 +18,6 @@ RSpec.describe ChatRoom, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:participant).class_name('User') }
     it { is_expected.to belong_to(:created_by).class_name('User') }
+    it { is_expected.to have_many(:chat_messages) }
   end
 end

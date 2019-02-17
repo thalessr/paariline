@@ -5,6 +5,8 @@ class ChatRoom < ApplicationRecord
   belongs_to :participant, class_name: 'User'
   belongs_to :created_by, class_name: 'User'
 
+  has_many :chat_messages, dependent: :restrict_with_error, inverse_of: :chat_room
+
   before_validation :add_chat_name, on: :create
 
   validates :participant_id, uniqueness: { scope: :created_by_id }
