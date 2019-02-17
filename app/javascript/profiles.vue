@@ -12,11 +12,11 @@
         <a-card hoverable style="width: 300px">
           <img alt="example" :src="item.attributes.picture_url" slot="cover">
           <template class="ant-card-actions" slot="actions">
-            <a-icon type="like" v-on:click="likePicture(item.id)"/>
-            <a-icon type="dislike"/>
+            <a-icon type="like" v-on:click="likePicture(item)"/>
+            <a-icon type="dislike" v-on:click="dislikePicture(item)"/>
           </template>
           {{item.attributes.user_full_name | capitalize}}
-          {{item.attributes.user_age}}
+          Age: {{item.attributes.user_age}}
         </a-card>
       </a-col>
       <a-divider/>
@@ -80,22 +80,30 @@ export default {
         }
       );
     },
-    likePicture(pictureId) {
-      resource.like({ id: pictureId }, {}).then(
+    likePicture(picture) {
+      resource.like({ id: picture.id }, {}).then(
         response => {
           console.log(response.body.data);
+          this.removePicture(picture);
         },
         response => {
           // error callback
         }
       );
     },
-    dislike() {},
-    displayMessage(messageType, message, description) {
-      this.type = messageType;
-      this.message = message;
-      this.visible = true;
-      this.description = description;
+    dislikePicture(picture) {
+      resource.dislike({ id: picture.id }, {}).then(
+        response => {
+          console.log(response.body.data);
+          this.removePicture(picture);
+        },
+        response => {
+          // error callback
+        }
+      );
+    },
+    removePicture(picture) {
+      this.profilePictures.splice(this.profilePictures.indexOf(picture), 1);
     }
   }
 };

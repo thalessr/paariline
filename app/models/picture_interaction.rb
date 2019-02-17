@@ -13,8 +13,8 @@ class PictureInteraction < ApplicationRecord
 
   validates :interaction_type, inclusion: { in: InteractionTypes::ALL }, presence: true
 
-  after_commit :update_like_counter
-  after_commit :update_dislike_counter
+  after_commit :update_like_counter, if: proc { |record| record.interaction_type == InteractionTypes::LIKE }
+  after_commit :update_dislike_counter, if: proc { |record| record.interaction_type == InteractionTypes::DISLIKE }
 
   class << self
 
@@ -29,13 +29,11 @@ class PictureInteraction < ApplicationRecord
   end
 
   def update_like_counter
-    profile_picture.like_count = PictureInteraction.likes.count
-    profile_picture.save
+    profile_picture.update(like_count: PictureInteraction.likes.count)
   end
 
   def update_dislike_counter
-    profile_picture.like_count = PictureInteraction.dislikes.count
-    profile_picture.save
+    profile_picture.update(like_count: PictureInteraction.dislikes.count)
   end
 
 end
