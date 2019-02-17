@@ -15,9 +15,9 @@
             <template
               slot="title"
             >{{item.attributes.user_full_name | capitalize}}, {{item.attributes.user_age}}</template>
-            <template slot="description">
-                Number of likes
+            <template slot="description">Number of likes
               <a-badge
+                showZero
                 :count="item.attributes.like_count"
                 :numberStyle="{backgroundColor: '#52c41a'}"
               />
