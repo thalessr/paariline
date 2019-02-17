@@ -64,4 +64,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.x.webpacker[:dev_server_host] = 'http://localhost:8080'
+  config.action_cable.url = 'ws://localhost:3035'
+  config.action_cable.disable_request_forgery_protection = true
 end

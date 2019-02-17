@@ -7,6 +7,8 @@ class ChatRoom < ApplicationRecord
 
   has_many :chat_messages, dependent: :restrict_with_error, inverse_of: :chat_room
 
+  scope :user_rooms, ->(user_id) { ChatRoom.where(created_by_id: user_id).or(ChatRoom.where(participant_id: user_id)) }
+
   before_validation :add_chat_name, on: :create
 
   validates :participant_id, uniqueness: { scope: :created_by_id }
