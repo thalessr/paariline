@@ -2,9 +2,11 @@
 
 class ProfilePicturesController < ApplicationController
 
+  before_action :authenticate_user!
+
   def index
     render json: ProfilePicturesSerializer.new(
-      ProfilePicture.includes(:user).with_attached_picture.avaiable_to_display(current_user)
+      ProfilePicture.distinct.includes(:user).with_attached_picture.avaiable_to_display(current_user)
     ).serialized_json
   end
 

@@ -15,9 +15,7 @@
                   :author="comment.attributes.sent_by_full_name"
                   :content="comment.attributes.content"
                 >
-                  <span
-                    slot="datetime"
-                  >{{comment.attributes.sent_at | moment("DD-MM-YYYY HH:MM Z")}}</span>
+                  <span slot="datetime">{{comment.attributes.sent_at | moment("DD-MM-YYYY HH:MM")}}</span>
                 </a-comment>
               </a-list-item>
             </a-list>
@@ -67,6 +65,7 @@ Vue.http.headers.common["X-CSRF-Token"] = document
   .getAttribute("content");
 
 let resource = Vue.resource("chat_rooms{/id}");
+let messageResource = Vue.resource("chat_messages{/id}");
 let cable = ActionCable.createConsumer("ws://localhost:3000/cable");
 
 export default {
@@ -84,7 +83,6 @@ export default {
 
   mounted() {
     this.fecthChatRooms();
-    // this.subscribeChannel(this.chatRooms[0].attributes.name);
   },
   methods: {
     fecthChatRooms() {
@@ -97,9 +95,20 @@ export default {
         }
       );
     },
+    fecthChatMessages(roomName) {
+      messageResource.get({ room_name: roomName }).then(
+        response => {
+          this.comments = response.body.data;
+        },
+        response => {
+          console.error(response);
+        }
+      );
+    },
     changeActivekey(key) {
       if (this.chatRooms && this.chatRooms[key]) {
         this.subscribeChannel(this.chatRooms[key].attributes.name);
+        this.fecthChatMessages(this.chatRooms[key].attributes.name);
       }
     },
     subscribeChannel(roomName) {

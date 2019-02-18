@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :dashboard, only: :index
   resources :welcome_page, only: :index
   resources :chat_rooms, only: :index
+  resources :chat_messages, only: :index
   resources :users, only: %i[show update]
   resources :profile_pictures, only: %i[index] do
     post :like, on: :member
