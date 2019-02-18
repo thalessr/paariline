@@ -3,7 +3,7 @@
     <a-list itemLayout="horizontal" :dataSource="chatRooms">
       <a-list-item slot="renderItem" slot-scope="item, index">
         <a-collapse v-model="activeKey" @change="changeActivekey" accordion>
-          <a-collapse-panel :header="item.attributes.name" :key="index" style="width: 700px">
+          <a-collapse-panel :header="item.attributes.name" :key="item.id" style="width: 700px">
             <a-list
               v-if="comments.length"
               :dataSource="comments"
@@ -96,6 +96,7 @@ export default {
       );
     },
     fecthChatMessages(roomName) {
+      this.comments = [];
       messageResource.get({ room_name: roomName }).then(
         response => {
           this.comments = response.body.data;
@@ -106,9 +107,12 @@ export default {
       );
     },
     changeActivekey(key) {
-      if (this.chatRooms && this.chatRooms[key]) {
-        this.subscribeChannel(this.chatRooms[key].attributes.name);
-        this.fecthChatMessages(this.chatRooms[key].attributes.name);
+      let chatRoom = this.chatRooms.find(room => room.id === key);
+      if (chatRoom) {
+        this.activeKey = [key];
+        let chatRoomName = chatRoom.attributes.name;
+        this.subscribeChannel(chatRoomName);
+        this.fecthChatMessages(chatRoomName);
       }
     },
     subscribeChannel(roomName) {

@@ -6,7 +6,7 @@ class ChatMessagesController < ApplicationController
 
   def index
     render json: ChatMessageSerializer.new(
-      ChatMessage.joins(:chat_room).where(chat_rooms: { name: params[:room_name] })
+      ChatMessage.includes(:sent_by).joins(:chat_room).where(chat_rooms: { name: params[:room_name] })
     ).serialized_json
   end
 
