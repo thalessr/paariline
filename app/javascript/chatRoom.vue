@@ -2,7 +2,7 @@
   <div style="width: 100%;">
     <a-list itemLayout="horizontal" :dataSource="chatRooms">
       <a-list-item slot="renderItem" slot-scope="item, index">
-        <a-collapse v-model="activeKey" @change="changeActivekey">
+        <a-collapse v-model="activeKey" @change="changeActivekey" accordion>
           <a-collapse-panel :header="item.attributes.name" :key="index" style="width: 700px">
             <a-list
               v-if="comments.length"
@@ -11,7 +11,14 @@
               itemLayout="horizontal"
             >
               <a-list-item slot="renderItem" slot-scope="comment, index">
-                <a-comment :author="comment.id" :content="comment.content"></a-comment>
+                <a-comment
+                  :author="comment.attributes.sent_by_full_name"
+                  :content="comment.attributes.content"
+                >
+                  <span
+                    slot="datetime"
+                  >{{comment.attributes.sent_at | moment("DD-MM-YYYY HH:MM Z")}}</span>
+                </a-comment>
               </a-list-item>
             </a-list>
             <a-comment>
@@ -40,14 +47,14 @@
     </a-list>
   </div>
 </template>
-  </div>
-</template>
+
 
 <script>
 import Vue from "vue";
 import { List, Avatar, Collapse, Comment } from "ant-design-vue";
 import VueResource from "vue-resource";
 import ActionCable from "actioncable";
+import moment from "moment";
 
 Vue.use(List);
 Vue.use(Avatar);
@@ -67,16 +74,17 @@ export default {
   data() {
     return {
       chatRooms: {},
-      activeKey: ["0"],
+      activeKey: ["-1"],
       comments: [],
       submitting: false,
-      value: ""
+      value: "",
+      moment
     };
   },
 
   mounted() {
     this.fecthChatRooms();
-    this.subscribeChannel();
+    // this.subscribeChannel(this.chatRooms[0].attributes.name);
   },
   methods: {
     fecthChatRooms() {
@@ -96,7 +104,10 @@ export default {
     },
     subscribeChannel(roomName) {
       App.chatChannel = cable.subscriptions.create(
-        { channel: "ChatRoomChannel", room: roomName },
+        {
+          channel: "ChatRoomChannel",
+          room: roomName
+        },
         {
           received: chatMessage => {
             console.log(chatMessage);
@@ -106,10 +117,6 @@ export default {
           }
         }
       );
-      App.chatChannel.send({
-        sent_by: "Paul",
-        content: "This is a cool chat app."
-      });
     },
     handleSubmit() {
       if (!this.value) {
@@ -117,6 +124,8 @@ export default {
       }
 
       this.submitting = true;
+
+      App.chatChannel.send({ content: this.value });
 
       setTimeout(() => {
         this.submitting = false;
