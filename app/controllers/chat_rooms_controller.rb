@@ -3,7 +3,9 @@
 class ChatRoomsController < ApplicationController
 
   def index
-    render json: ChatRoom.user_rooms(current_user.id)
+    render json: ChatRoomSerializer.new(
+      ChatRoom.user_rooms(current_user)
+    ).serialized_json
   end
 
 end

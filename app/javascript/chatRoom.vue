@@ -1,126 +1,130 @@
 <template>
-  <div>
-    <a-alert
-      v-if="visible"
-      :message="message"
-      :description="description"
-      :type="type"
-      showIcon
-      closable
-    />
-
-    <a-form layout="vertical" :form="form" @submit="handleSubmit">
-      <a-form-item>
-        <a-input v-model="user.first_name" placeholder="First Name"/>
-      </a-form-item>
-      <a-form-item>
-        <a-input v-model="user.last_name" placeholder="Last Name"/>
-      </a-form-item>
-      <a-form-item>
-        <a-input-number :min="13" :max="100" v-model="user.age" placeholder="Age"/>
-      </a-form-item>
-      <a-form-item>
-        <a-input v-model="user.email" placeholder="Email"/>
-      </a-form-item>
-      <a-form-item>
-        <a-input v-model="user.city" placeholder="City"/>
-      </a-form-item>
-      <a-form-item>
-        <a-date-picker v-model="user.birth_date" placeholder="Birth Date" style="width: 100%"/>
-      </a-form-item>
-      <a-form-item>
-        <a-button type="primary" html-type="submit">Edit</a-button>
-      </a-form-item>
-    </a-form>
+  <div style="width: 100%;">
+    <a-list itemLayout="horizontal" :dataSource="chatRooms">
+      <a-list-item slot="renderItem" slot-scope="item, index">
+        <a-collapse v-model="activeKey" @change="changeActivekey">
+          <a-collapse-panel :header="item.attributes.name" :key="index" style="width: 700px">
+            <a-list
+              v-if="comments.length"
+              :dataSource="comments"
+              :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
+              itemLayout="horizontal"
+            >
+              <a-list-item slot="renderItem" slot-scope="comment, index">
+                <a-comment :author="comment.id" :content="comment.content"></a-comment>
+              </a-list-item>
+            </a-list>
+            <a-comment>
+              <a-avatar
+                slot="avatar"
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                alt="Han Solo"
+              />
+              <div slot="content">
+                <a-form-item>
+                  <a-textarea :rows="4" @change="handleChange" :value="value"></a-textarea>
+                </a-form-item>
+                <a-form-item>
+                  <a-button
+                    htmlType="submit"
+                    :loading="submitting"
+                    @click="handleSubmit"
+                    type="primary"
+                  >Add Comment</a-button>
+                </a-form-item>
+              </div>
+            </a-comment>
+          </a-collapse-panel>
+        </a-collapse>
+      </a-list-item>
+    </a-list>
+  </div>
+</template>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import {
-  Form,
-  Icon,
-  Button,
-  Input,
-  DatePicker,
-  Alert,
-  InputNumber
-} from "ant-design-vue";
+import { List, Avatar, Collapse, Comment } from "ant-design-vue";
 import VueResource from "vue-resource";
-import VueMoment from "vue-moment";
+import ActionCable from "actioncable";
 
-Vue.use(Form);
-Vue.use(Icon);
-Vue.use(Button);
-Vue.use(Input);
-Vue.use(DatePicker);
-Vue.use(Alert);
-Vue.use(InputNumber);
+Vue.use(List);
+Vue.use(Avatar);
+Vue.use(Collapse);
+Vue.use(Comment);
 Vue.use(VueResource);
-Vue.use(VueMoment);
 
 Vue.http.headers.common["X-CSRF-Token"] = document
   .querySelector('meta[name="csrf-token"]')
   .getAttribute("content");
-var resource = Vue.resource("users{/id}");
+
+let resource = Vue.resource("chat_rooms{/id}");
+let cable = ActionCable.createConsumer("ws://localhost:3000/cable");
 
 export default {
+  name: "ChatRoom",
   data() {
     return {
-      form: this.$form.createForm(this),
-      user: {},
-      visible: false,
-      type: "success",
-      message: "",
-      description: ""
+      chatRooms: {},
+      activeKey: ["0"],
+      comments: [],
+      submitting: false,
+      value: ""
     };
   },
+
   mounted() {
-    this.$nextTick(() => {
-      this.form.validateFields();
-    });
-    this.$cable.subscribe(
-      { channel: "ChatRoomChannel", room: "private" },
-      "chat_channel_private"
-    );
-    this.fecthCurrentUser();
+    this.fecthChatRooms();
+    this.subscribeChannel();
   },
   methods: {
-    // Only show error after a field is touched.
-    fecthCurrentUser() {
-      this.$http.get("users/1").then(
+    fecthChatRooms() {
+      resource.get().then(
         response => {
-          this.user = response.body.data.attributes;
-          this.user.birth_date = this.$moment(this.user.birth_date);
+          this.chatRooms = response.body.data;
         },
         response => {
           console.error(response);
         }
       );
     },
-    handleSubmit(e) {
-      e.preventDefault();
-      resource.update({ id: this.user.id }, { user: this.user }).then(
-        response => {
-          this.displayMessage("success", "Success", "User saved sucessfully");
-          this.user = response.body.data.attributes;
-          this.user.birth_date = this.$moment(this.user.birth_date);
-        },
-        response => {
-          let errorMessage = "";
-          response.body.errors.forEach(function(element) {
-            errorMessage += `${element} `;
-          });
-
-          this.displayMessage("error", "Errors", errorMessage);
+    changeActivekey(key) {
+      if (this.chatRooms && this.chatRooms[key]) {
+        this.subscribeChannel(this.chatRooms[key].attributes.name);
+      }
+    },
+    subscribeChannel(roomName) {
+      App.chatChannel = cable.subscriptions.create(
+        { channel: "ChatRoomChannel", room: roomName },
+        {
+          received: chatMessage => {
+            console.log(chatMessage);
+            setTimeout(() => {
+              this.comments = [JSON.parse(chatMessage).data, ...this.comments];
+            }, 1000);
+          }
         }
       );
+      App.chatChannel.send({
+        sent_by: "Paul",
+        content: "This is a cool chat app."
+      });
     },
-    displayMessage(messageType, message, description) {
-      this.type = messageType;
-      this.message = message;
-      this.visible = true;
-      this.description = description;
+    handleSubmit() {
+      if (!this.value) {
+        return;
+      }
+
+      this.submitting = true;
+
+      setTimeout(() => {
+        this.submitting = false;
+        this.value = "";
+      }, 1000);
+    },
+    handleChange(e) {
+      this.value = e.target.value;
     }
   }
 };
