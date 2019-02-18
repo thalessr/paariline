@@ -17,6 +17,9 @@ class PictureInteraction < ApplicationRecord
 
   after_commit :update_like_counter, if: proc { |record| record.interaction_type == InteractionTypes::LIKE }
   after_commit :update_dislike_counter, if: proc { |record| record.interaction_type == InteractionTypes::DISLIKE }
+  after_commit :create_chat_room_if_matched, if: proc { |record| record.interaction_type == InteractionTypes::LIKE }
+
+  delegate :user_id, to: :profile_picture, prefix: true
 
   class << self
 
@@ -28,14 +31,39 @@ class PictureInteraction < ApplicationRecord
       where(interaction_type: InteractionTypes::DISLIKE)
     end
 
+    def liked_by(user_id:, profile_picture_user_id:)
+      joins(:profile_picture).likes.where(user_id: user_id, profile_pictures: { user_id: profile_picture_user_id })
+    end
+
   end
 
+  private
+
   def update_like_counter
-    profile_picture.update(like_count: PictureInteraction.likes.count)
+    counter = PictureInteraction.joins(:profile_picture).likes.where(
+      profile_pictures: { user_id: profile_picture_user_id }
+    ).count
+    profile_picture.update(like_count: counter)
   end
 
   def update_dislike_counter
-    profile_picture.update(like_count: PictureInteraction.dislikes.count)
+    counter = PictureInteraction.joins(:profile_picture).dislikes.where(
+      profile_pictures: { user_id: profile_picture_user_id }
+    ).count
+    profile_picture.update(like_count: counter)
+  end
+
+  def create_chat_room_if_matched
+    return if ChatRoom.user_rooms(user_id).user_rooms(profile_picture_user_id).any?
+
+    user_liked = PictureInteraction.liked_by(user_id: user_id, profile_picture_user_id: profile_picture_user_id).any?
+    profile_picture_user_liked = PictureInteraction.liked_by(
+      user_id: profile_picture_user_id, profile_picture_user_id: user_id
+    ).any?
+
+    return unless user_liked && profile_picture_user_liked
+
+    ChatRoom.create!(participant_id: user_id, created_by_id: profile_picture_user_id)
   end
 
 end

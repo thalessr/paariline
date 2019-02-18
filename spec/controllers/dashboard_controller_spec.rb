@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe DashboardController, type: :controller do
+  let(:user) { create(:user) }
+
+  before { sign_in(user) }
+
   describe 'routes' do
     let(:dashbord_url) { '/welcome_page' }
 
