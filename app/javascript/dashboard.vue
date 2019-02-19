@@ -1,7 +1,13 @@
 <template>
   <a-layout id="components-dashboard" class="layout">
     <a-layout-header theme="light" class="header">
-      <a-menu v-model="current" mode="horizontal" theme="dark" :style="{ lineHeight: '64px' }">
+      <a-menu
+        v-model="current"
+        mode="horizontal"
+        theme="dark"
+        :style="{ lineHeight: '64px' }"
+        @click="onclick"
+      >
         <a-menu-item key="home">
           <router-link to="/">Home</router-link>
         </a-menu-item>
@@ -40,6 +46,11 @@ export default {
       current: ["home"],
       name: "Dashboard"
     };
+  },
+  methods: {
+    onclick(item) {
+      this.current = [item.key];
+    }
   }
 };
 </script>

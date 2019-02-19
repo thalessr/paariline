@@ -5,10 +5,7 @@ import Welcome from '../welcome.vue'
 import Profiles from '../profiles.vue'
 import MostRated from '../mostRated.vue'
 import ChatRoom from '../chatRoom.vue'
-import { Menu, Icon } from 'ant-design-vue';
 
-Vue.use(Menu);
-Vue.use(Icon);
 Vue.use(Router);
 
 export default new Router({

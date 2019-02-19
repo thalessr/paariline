@@ -81,10 +81,6 @@ export default {
     };
   },
   mounted() {
-    this.$nextTick(() => {
-      this.form.validateFields();
-    });
-
     this.fecthCurrentUser();
   },
   methods: {
@@ -104,7 +100,7 @@ export default {
       e.preventDefault();
       resource.update({ id: this.user.id }, { user: this.user }).then(
         response => {
-          this.displayMessage("success", "Success", "User saved sucessfully");
+          this.$message.success("User saved sucessfully");
           this.user = response.body.data.attributes;
           this.user.birth_date = this.$moment(this.user.birth_date);
         },
@@ -113,17 +109,10 @@ export default {
           response.body.errors.forEach(function(element) {
             errorMessage += `${element} `;
           });
-
-          this.displayMessage("error", "Errors", errorMessage);
+          this.$message.error(errorMessage);
         }
       );
     },
-    displayMessage(messageType, message, description) {
-      this.type = messageType;
-      this.message = message;
-      this.visible = true;
-      this.description = description;
-    }
   }
 };
 </script>
