@@ -1,14 +1,5 @@
 <template>
   <div>
-    <a-alert
-      v-if="visible"
-      :message="message"
-      :description="description"
-      :type="type"
-      showIcon
-      closable
-    />
-
     <a-form layout="vertical" :form="form" @submit="handleSubmit">
       <a-form-item>
         <a-input v-model="user.first_name" placeholder="First Name"/>
@@ -29,6 +20,15 @@
         <a-date-picker v-model="user.birth_date" placeholder="Birth Date" style="width: 100%"/>
       </a-form-item>
       <a-form-item>
+        <div class="clearfix">
+          <a-upload :fileList="fileList" :remove="handleRemove" :beforeUpload="beforeUpload">
+            <a-button>
+              <a-icon type="upload"/>Select File
+            </a-button>
+          </a-upload>
+        </div>
+      </a-form-item>
+      <a-form-item>
         <a-button type="primary" html-type="submit">Edit</a-button>
       </a-form-item>
     </a-form>
@@ -43,19 +43,22 @@ import {
   Button,
   Input,
   DatePicker,
-  Alert,
-  InputNumber
+  InputNumber,
+  Upload,
+  Modal
 } from "ant-design-vue";
 import VueResource from "vue-resource";
 import VueMoment from "vue-moment";
+// import { DirectUpload } from "@rails/activestorage";
 
 Vue.use(Form);
 Vue.use(Icon);
 Vue.use(Button);
 Vue.use(Input);
 Vue.use(DatePicker);
-Vue.use(Alert);
 Vue.use(InputNumber);
+Vue.use(Upload);
+Vue.use(Modal);
 Vue.use(VueResource);
 Vue.use(VueMoment);
 
@@ -63,9 +66,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-Vue.http.headers.common["X-CSRF-Token"] = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
+Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
 var resource = Vue.resource("users{/id}");
 
 export default {
@@ -73,11 +74,12 @@ export default {
     return {
       hasErrors,
       form: this.$form.createForm(this),
-      user: {},
+      user: { new_pictures: [] },
       visible: false,
       type: "success",
       message: "",
-      description: ""
+      description: "",
+      fileList: []
     };
   },
   mounted() {
@@ -113,6 +115,20 @@ export default {
         }
       );
     },
+    handleRemove(file) {
+      const index = this.fileList.indexOf(file);
+      const newFileList = this.fileList.slice();
+      newFileList.splice(index, 1);
+      this.fileList = newFileList;
+    },
+    beforeUpload(file) {
+      this.fileList = [...this.fileList, file];
+      this.user.new_pictures = this.fileList;
+      return false;
+    },
+    fileUpload() {
+      // const upload = new DirectUpload(file, url);
+    }
   }
 };
 </script>

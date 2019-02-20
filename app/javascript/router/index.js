@@ -5,6 +5,7 @@ import Welcome from '../welcome.vue'
 import Profiles from '../profiles.vue'
 import MostRated from '../mostRated.vue'
 import ChatRoom from '../chatRoom.vue'
+import Activities from '../activities.vue'
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
             path: '/chatRoom',
             name: 'ChatRoom',
             component: ChatRoom
+        },
+        {
+            path: '/activities',
+            name: 'Activities',
+            component: Activities
         }
     ]
 })

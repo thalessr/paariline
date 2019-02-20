@@ -23,6 +23,9 @@
         <a-menu-item key="ChatRoom">
           <router-link to="/chatRoom">ChatRoom</router-link>
         </a-menu-item>
+        <a-menu-item key="Activity">
+          <router-link to="/activities">Activity</router-link>
+        </a-menu-item>
         <a-menu-item key="logout">
           <a href="/users/sign_out" rel="noopener noreferrer" data-method="delete">
             <a-icon type="logout"/>Logout

@@ -16,10 +16,11 @@ Rails.application.routes.draw do
   resources :welcome_page, only: :index
   resources :chat_rooms, only: :index
   resources :chat_messages, only: :index
+  resources :activities, only: :index
   resources :users, only: %i[show update]
   resources :profile_pictures, only: %i[index] do
     post :like, on: :member
     post :dislike, on: :member
-    get :most_rated, on: :collection
+    get  :most_rated, on: :collection
   end
 end

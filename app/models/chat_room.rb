@@ -13,6 +13,9 @@ class ChatRoom < ApplicationRecord
 
   validates :participant_id, uniqueness: { scope: :created_by_id }
 
+  delegate :full_name, to: :created_by, prefix: true
+  delegate :full_name, to: :participant, prefix: true
+
   def add_chat_name
     self.name = "chat_room_#{participant_id}_#{created_by_id}"
   end
