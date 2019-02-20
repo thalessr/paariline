@@ -9,7 +9,8 @@ class CreateChatMessages < ActiveRecord::Migration[5.2]
       t.belongs_to :seen_by, foreign_key: { to_table: :users }, index: true
       t.text :content
       t.timestamp :seent_at
-      t.timestamp :sent_at
+      t.timestamps
+      t.index :created_at
     end
   end
 

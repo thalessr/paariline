@@ -3,6 +3,8 @@
 class ChatMessageSerializer
 
   include FastJsonapi::ObjectSerializer
-  attributes :content, :sent_at, :sent_by_full_name
+  attributes :content, :sent_by_full_name
+
+  attributes :sent_at, &:created_at
 
 end

@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_for :users, path: 'users'
+  devise_for :admins, path: 'user_admin'
   mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  unauthenticated do
+  unauthenticated :user do
     root to: 'welcome_page#index'
   end
 
-  authenticated do
+  authenticated :user do
     root to: 'dashboard#index'
   end
 

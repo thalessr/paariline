@@ -50,6 +50,9 @@ gem 'fast_jsonapi'
 # CORS
 gem 'rack-cors', require: 'rack/cors'
 
+# Admin UI
+gem 'rails_admin', '~> 1.3'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

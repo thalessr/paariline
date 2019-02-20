@@ -7,6 +7,7 @@ RSpec.describe ChatMessage, type: :model do
     it { is_expected.to have_db_index(:chat_room_id) }
     it { is_expected.to have_db_index(:seen_by_id) }
     it { is_expected.to have_db_index(:sent_by_id) }
+    it { is_expected.to have_db_index(:created_at) }
   end
 
   describe 'associations' do

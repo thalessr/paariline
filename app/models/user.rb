@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :rememberable, :validatable
 
   has_many :profile_pictures, dependent: :destroy, inverse_of: :user
+  has_many :activities, foreign_key: :owner_id, inverse_of: :owner, dependent: :restrict_with_error
 
   validates :first_name, :last_name, presence: true, on: :update
 
