@@ -5,18 +5,27 @@
       v-bind:item="item"
       v-bind:index="index"
       v-bind:key="item.id"
-    >{{item.attributes.description}} at {{item.attributes.happened_at | moment("DD-MM-YYYY HH:MM")}}</a-timeline-item>
+    >
+      {{item.attributes.description}} at {{item.attributes.happened_at | moment("DD-MM-YYYY HH:MM")}}
+      <a-icon
+        slot="dot"
+        type="clock-circle-o"
+        style="font-size: 16px;"
+        v-if="index == timelineItems.length - 1"
+      />
+    </a-timeline-item>
   </a-timeline>
 </template>
 <script>
 import Vue from "vue";
-import { Timeline } from "ant-design-vue";
+import { Timeline, Icon } from "ant-design-vue";
 import VueResource from "vue-resource";
 import moment from "moment";
 
 Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
 
 Vue.use(Timeline);
+Vue.use(Icon);
 
 let resource = Vue.resource("activities");
 
