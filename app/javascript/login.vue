@@ -22,10 +22,6 @@ import VueResource from "vue-resource";
 
 Vue.use(VueResource);
 
-Vue.http.headers.common["X-CSRF-Token"] = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
-
 let resource = Vue.resource("/users/sign_in");
 export default {
   data() {
@@ -34,7 +30,9 @@ export default {
       user: {}
     };
   },
-  mounted() {},
+  mounted() {
+    Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
+  },
   methods: {
     handleSubmit(e) {
       e.preventDefault();

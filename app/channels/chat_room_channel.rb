@@ -14,7 +14,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     data.symbolize_keys!
     chat_room = ChatRoom.find_by!(name: params['room'])
     chat_message = ChatMessage.create!(
-      chat_room: chat_room, sent_by: current_user, sent_at: Time.zone.now, content: data[:content]
+      chat_room: chat_room, sent_by: current_user, created_at: Time.zone.now, content: data[:content]
     )
 
     ActionCable.server.broadcast(

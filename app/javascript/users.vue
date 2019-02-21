@@ -66,7 +66,6 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
 var resource = Vue.resource("users{/id}");
 
 export default {
@@ -83,6 +82,7 @@ export default {
     };
   },
   mounted() {
+    Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
     this.fecthCurrentUser();
   },
   methods: {

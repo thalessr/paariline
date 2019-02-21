@@ -44,10 +44,6 @@ Vue.use(Badge);
 
 Vue.use(VueResource);
 
-Vue.http.headers.common["X-CSRF-Token"] = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
-
 let customActions = {
   mostRated: { method: "GET", url: "/profile_pictures/most_rated" }
 };
@@ -68,6 +64,7 @@ export default {
   },
 
   mounted() {
+    Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
     this.fetchProfiles();
   },
   methods: {

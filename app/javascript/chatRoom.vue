@@ -60,10 +60,6 @@ Vue.use(Collapse);
 Vue.use(Comment);
 Vue.use(VueResource);
 
-Vue.http.headers.common["X-CSRF-Token"] = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
-
 let resource = Vue.resource("chat_rooms{/id}");
 let messageResource = Vue.resource("chat_messages{/id}");
 let cable = ActionCable.createConsumer("ws://localhost:3000/cable");
@@ -82,6 +78,7 @@ export default {
   },
 
   mounted() {
+    Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
     this.fecthChatRooms();
   },
   methods: {

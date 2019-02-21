@@ -23,7 +23,7 @@
           </a-card-meta>
         </a-card>
       </a-col>
-      <a-divider/>
+      <a-divider v-if="profilePictures.length > 0"/>
     </a-row>
   </div>
 </template>
@@ -41,10 +41,6 @@ Vue.use(Divider);
 Vue.use(Col);
 
 Vue.use(VueResource);
-
-Vue.http.headers.common["X-CSRF-Token"] = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content");
 
 let customActions = {
   like: { method: "POST", url: "profile_pictures{/id}/like" },
@@ -71,6 +67,7 @@ export default {
   },
 
   mounted() {
+    Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
     this.fetchProfiles();
   },
   methods: {

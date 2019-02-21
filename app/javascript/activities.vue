@@ -30,8 +30,6 @@ import { Timeline, Icon } from "ant-design-vue";
 import VueResource from "vue-resource";
 import moment from "moment";
 
-Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
-
 Vue.use(Timeline);
 Vue.use(Icon);
 
@@ -45,6 +43,7 @@ export default {
     };
   },
   mounted() {
+    Vue.http.headers.common["X-CSRF-Token"] = Rails.csrfToken();
     this.fetchTimelines();
   },
   methods: {
