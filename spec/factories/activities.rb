@@ -5,7 +5,7 @@ FactoryBot.define do
     happened_at { Time.zone.now }
     description { Faker::GreekPhilosophers.quote }
     source_name { 'User' }
-    source_id { ower&.id }
+    source_id { owner&.id }
     icon { 'settings' }
     color { Faker::Color.hex_color }
     association :owner, factory: :user

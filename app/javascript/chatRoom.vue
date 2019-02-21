@@ -122,7 +122,7 @@ export default {
           received: chatMessage => {
             console.log(chatMessage);
             setTimeout(() => {
-              this.comments = [JSON.parse(chatMessage).data, ...this.comments];
+              this.comments = [...this.comments, JSON.parse(chatMessage).data];
             }, 1000);
           }
         }
