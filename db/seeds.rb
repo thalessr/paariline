@@ -23,3 +23,6 @@ client.profiles.each do |profile|
   user.birth_date = profile.birth_date
   user.save!
 end
+
+# Create admin user
+Admin.create!(email: 'admin@paariline.ee', password: 'password', password_confirmation: 'password')

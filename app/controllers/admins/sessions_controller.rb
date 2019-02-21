@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Admin
+module Admins
   class SessionsController < Devise::SessionsController
 
     include Accessible

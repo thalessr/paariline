@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       current: ["home"],
-      name: 'Welcome'
+      name: "Welcome"
     };
   }
 };

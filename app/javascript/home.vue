@@ -10,16 +10,8 @@
       <a-icon
         slot="dot"
         type="clock-circle-o"
-        style="font-size: 20px;"
+        style="font-size: 16px;"
         v-if="index == timelineItems.length - 1"
-      />
-      <a-icon
-        slot="dot"
-        theme="twoTone"
-        :twoToneColor="item.attributes.color || blue"
-        :type="item.attributes.icon"
-        style="font-size: 20px;"
-        v-if="item.attributes.icon"
       />
     </a-timeline-item>
   </a-timeline>

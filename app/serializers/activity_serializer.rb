@@ -3,6 +3,6 @@
 class ActivitySerializer
 
   include FastJsonapi::ObjectSerializer
-  attributes :happened_at, :description
+  attributes :happened_at, :description, :color, :icon
 
 end

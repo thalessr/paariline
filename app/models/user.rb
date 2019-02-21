@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, presence: true, on: :update
 
+  after_commit :create_activity
+
   def full_name
     [first_name, last_name].select(&:present?).join(' ')
   end
@@ -29,6 +31,24 @@ class User < ApplicationRecord
   def download_picture(file_url)
     response = Net::HTTP.get_response(URI.parse(file_url))
     StringIO.new(response.body)
+  end
+
+  def create_activity
+    Activity.create!(
+      owner_id: id,
+      description: activity_description,
+      source_id: id,
+      source_name: model_name.name,
+      happened_at: Time.zone.now,
+      icon: persisted? ? 'edit' : 'form',
+      color: persisted? ? '#ffcc00' : 'blue'
+    )
+  end
+
+  def activity_description
+    return 'Account created' unless persisted?
+
+    "Updated the fields #{previous_changes.except('updated_at').keys.join(', ')}"
   end
 
 end

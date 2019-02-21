@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, path: 'users'
-  devise_for :admins, path: 'user_admin'
+  devise_for :admins, path: 'user_admin', controllers: { sessions: 'admins/sessions' }
   mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   unauthenticated :user do

@@ -112,11 +112,23 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="css" scoped>
 .box {
   border: 2px solid;
   border-radius: 25px;
   color: purple;
   width: 120px;
+}
+.ant-card-meta-description {
+  color: rgba(27, 137, 180, 0.45);
+  height: 44px;
+  line-height: 22px;
+  overflow: hidden;
+}
+#ant-card-meta-description {
+  color: rgba(27, 137, 180, 0.45);
+  height: 44px;
+  line-height: 22px;
+  overflow: hidden;
 }
 </style>

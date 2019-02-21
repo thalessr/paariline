@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Users from '../users.vue'
-import Welcome from '../welcome.vue'
+import Home from '../home.vue'
 import Profiles from '../profiles.vue'
 import MostRated from '../mostRated.vue'
 import ChatRoom from '../chatRoom.vue'
@@ -19,7 +19,7 @@ export default new Router({
         {
             path: '/',
             name: 'Home',
-            component: Welcome
+            component: Home
         },
         {
             path: '/profiles',

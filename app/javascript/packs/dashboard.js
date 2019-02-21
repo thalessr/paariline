@@ -1,10 +1,8 @@
 
 import Vue from 'vue'
-import { Layout, message } from 'ant-design-vue';
+import { Layout, message, Dropdown, Menu, Icon, Breadcrumb } from 'ant-design-vue';
 import Dashboard from '../dashboard.vue'
 import router from '../router';
-import { Menu, Icon } from 'ant-design-vue';
-
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -13,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Vue.use(Layout);
     Vue.use(Menu);
     Vue.use(Icon);
+    Vue.use(Dropdown);
+    Vue.use(Breadcrumb);
 
     /* eslint-disable no-new */
     new Vue({
