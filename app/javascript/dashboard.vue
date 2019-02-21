@@ -1,6 +1,6 @@
 <template>
-  <a-layout id="components-dashboard" class="layout">
-    <a-layout-header theme="light" :class="layout">
+  <a-layout id="components-dashboard">
+    <a-layout-header theme="light" :style="{background: '#f0f2f5'}">
       <a-menu
         v-model="current"
         mode="horizontal"
@@ -24,7 +24,7 @@
           <router-link to="/activities">Activity</router-link>
         </a-menu-item>
         <a-dropdown
-          style="display: inline-block; height: 100%; vertical-align: initial; float: right"
+          style="display: inline-block; height: 100%; vertical-align: initial; padding-right: 10px; float: right"
         >
           <span style="cursor: pointer">
             <a-icon type="profile"/>
